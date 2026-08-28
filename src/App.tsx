@@ -5,7 +5,7 @@ import { useArtworkColors } from './hooks/useArtworkColors'
 import './App.css'
 
 export default function App() {
-  const { artworks, status, error } = useArtworkColors()
+  const { artworks, status, error, source } = useArtworkColors()
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   const hoveredArtwork = hoveredIndex !== null ? (artworks[hoveredIndex] ?? null) : null
@@ -21,7 +21,7 @@ export default function App() {
       {/* ── Header ──────────────────────────────────────────────── */}
       <header className="app-header">
         <h1 className="app-title">Chromatic</h1>
-        <p className="app-source">Art Institute of Chicago</p>
+        <p className="app-source">powered by Art Institute of Chicago</p>
       </header>
 
       {/* ── Loading / error ─────────────────────────────────────── */}
@@ -51,6 +51,7 @@ export default function App() {
       {status === 'ready' && (
         <p className="app-legend">
           Hue · Saturation · Lightness — each work positioned by its dominant color
+          {source === 'live' && ' · live API'}
         </p>
       )}
     </div>
