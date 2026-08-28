@@ -134,9 +134,11 @@ function RaycasterSetup() {
   const raycaster = useThree(s => s.raycaster)
   useEffect(() => {
     if (raycaster.params.Points) {
-      raycaster.params.Points.threshold = 0.08
+      // Threshold in world units. With a denser dataset (~3k+ points)
+      // 0.08 picks up too many neighbours; 0.04 gives a tighter hit target.
+      raycaster.params.Points.threshold = 0.04
     } else {
-      raycaster.params.Points = { threshold: 0.08 }
+      raycaster.params.Points = { threshold: 0.04 }
     }
   }, [raycaster])
   return null

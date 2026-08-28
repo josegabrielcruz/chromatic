@@ -22,9 +22,9 @@ Orbit the cloud with mouse or touch. Hover a point to identify the work — titl
 
 ## Caveats
 
-**Live API fetch, not the full collection.** On load the app fetches 5 pages × 100 artworks from the AIC public API (~500 works). The complete collection is ~130,000 artworks; a preprocessed static dataset would replace the live fetch and show the full shape of the collection. This is planned but not yet implemented.
+**First 10,000 artworks only.** The AIC API's Elasticsearch index caps simple pagination at 10,000 results. Of those, roughly 20–40% carry color metadata — so the visualization typically shows ~2,000–4,000 works. The full collection is ~130,000 artworks; getting beyond 10,000 requires cursor-based `search_after` pagination (planned).
 
-**Performance is still being tuned.** The rendering and GPU resource management have been through several rounds of fixes (unclamped shader point sizes, stale VAO bindings, per-frame buffer allocations). The current implementation is stable but there are likely further gains available — particularly around raycasting threshold tuning and potential use of `frameloop="demand"` once the drei OrbitControls damping interaction is resolved.
+**Performance is still being tuned.** The rendering pipeline has been through several rounds of fixes (unclamped shader point sizes, stale VAO bindings, per-frame GPU buffer allocations, raycaster threshold scaling). The current implementation is stable but there are likely further gains available.
 
 ---
 
@@ -44,7 +44,15 @@ npm install
 npm run dev
 ```
 
-Requires Node 18+. On first load, ~500 artworks are fetched from the [AIC public API](https://api.artic.edu/docs/). No API key required. Works are filtered to those with color metadata before rendering.
+Requires Node 18+. If `public/collection.json` is present (committed to the repo), the app loads from it instantly with no API calls. If not, it falls back to fetching ~500 artworks live from the AIC API.
+
+To regenerate the dataset:
+
+```bash
+npm run fetch-collection
+```
+
+This takes ~2 minutes (100 pages × 1.1 s) and writes `public/collection.json`. Commit the file when done. No API key required.
 
 ---
 
@@ -64,7 +72,8 @@ A fully desaturated work (`s = 0`) sits on the vertical center axis regardless o
 
 ## Roadmap
 
-- [ ] Offline-preprocessed dataset (full ~130k collection via [AIC GitHub data export](https://github.com/art-institute-of-chicago/api-data))
+- [x] Pre-generated static dataset (`npm run fetch-collection` → `public/collection.json`)
+- [ ] Cursor-based pagination to exceed 10,000 artworks (`search_after`)
 - [ ] Era filter — animate the cloud to show only a selected date range
 - [ ] Click-through to AIC artwork page
 - [ ] Artwork thumbnail on hover (IIIF on-demand)
