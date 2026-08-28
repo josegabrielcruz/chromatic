@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useRef, useCallback } from 'react'
-import { Canvas, type ThreeEvent } from '@react-three/fiber'
+import { Canvas, useThree, type ThreeEvent } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import type { ArtworkPoint } from '../../types'
@@ -125,6 +125,23 @@ function PointCloud({ artworks, onHoverChange }: PointCloudProps) {
   )
 }
 
+// ── Raycaster config ──────────────────────────────────────────────────────────
+// Setting threshold via Canvas `raycaster` prop requires a complete
+// RaycasterParameters object in @types/three@0.168 (all fields non-optional).
+// Configured here instead with a scoped selector — no store subscription side-effects.
+
+function RaycasterSetup() {
+  const raycaster = useThree(s => s.raycaster)
+  useEffect(() => {
+    if (raycaster.params.Points) {
+      raycaster.params.Points.threshold = 0.08
+    } else {
+      raycaster.params.Points = { threshold: 0.08 }
+    }
+  }, [raycaster])
+  return null
+}
+
 // ── Scene ─────────────────────────────────────────────────────────────────────
 
 interface SceneProps {
@@ -139,13 +156,13 @@ export function Scene({ artworks, onHoverChange }: SceneProps) {
         camera={{ fov: 50, near: 0.1, far: 100 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: false }}
-        raycaster={{ params: { Points: { threshold: 0.08 } } }}
         onCreated={({ camera }) => {
           camera.position.set(5, 3, 7)
           camera.lookAt(0, 0, 0)
         }}
       >
         <color attach="background" args={['#0b0a09']} />
+        <RaycasterSetup />
 
         {artworks.length > 0 && (
           <PointCloud
