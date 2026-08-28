@@ -1,0 +1,15 @@
+.scene {
+  position: absolute;
+  inset:    0;
+}
+
+.scene canvas {
+  display: block;
+  width:   100% !important;
+  height:  100% !important;
+  cursor:  grab;
+}
+
+.scene canvas:active {
+  cursor: grabbing;
+}

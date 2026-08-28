@@ -1,0 +1,130 @@
+@import './styles/tokens.css';
+
+/* ── Reset / base ────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+}
+
+html, body, #root {
+  width:    100%;
+  height:   100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--canvas-bg);
+  color:      var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App shell ───────────────────────────────────────────────────── */
+
+.app {
+  position: relative;
+  width:    100%;
+  height:   100%;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+
+.app-header {
+  position:   absolute;
+  top:        var(--sp-7);
+  left:       var(--sp-7);
+  z-index:    10;
+  pointer-events: none;
+}
+
+.app-title {
+  font-family: var(--font-serif);
+  font-size:   var(--size-xl);
+  font-weight: 400;
+  font-style:  italic;
+  color:       var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.app-source {
+  margin-top:  var(--sp-1);
+  font-family: var(--font-sans);
+  font-size:   var(--size-xs);
+  color:       var(--text-faint);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ── Legend ──────────────────────────────────────────────────────── */
+
+.app-legend {
+  position:   absolute;
+  bottom:     var(--sp-5);
+  right:      var(--sp-7);
+  z-index:    10;
+  font-family: var(--font-sans);
+  font-size:   var(--size-2xs);
+  color:       var(--text-faint);
+  letter-spacing: var(--tracking-wide);
+  pointer-events: none;
+  text-align: right;
+}
+
+/* ── Loading state ───────────────────────────────────────────────── */
+
+.app-loading {
+  position:   absolute;
+  bottom:     var(--sp-7);
+  left:       var(--sp-7);
+  z-index:    10;
+  display:    flex;
+  align-items: center;
+  gap:        var(--sp-3);
+  pointer-events: none;
+}
+
+.app-loading__dot {
+  display:       block;
+  width:         6px;
+  height:        6px;
+  border-radius: 50%;
+  background:    var(--text-faint);
+  animation:     loading-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes loading-pulse {
+  0%, 100% { opacity: 0.25; }
+  50%       { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-loading__dot { animation: none; opacity: 0.6; }
+}
+
+.app-loading__text {
+  font-family: var(--font-sans);
+  font-size:   var(--size-xs);
+  color:       var(--text-faint);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ── Error state ─────────────────────────────────────────────────── */
+
+.app-error {
+  position:   absolute;
+  bottom:     var(--sp-7);
+  left:       var(--sp-7);
+  z-index:    10;
+  font-family: var(--font-sans);
+  font-size:   var(--size-sm);
+  color:       var(--text-dim);
+  max-width:  320px;
+}
+
+.app-error__detail {
+  margin-top: var(--sp-2);
+  font-size:  var(--size-xs);
+  color:      var(--text-faint);
+}

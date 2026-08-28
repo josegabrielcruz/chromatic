@@ -1,0 +1,52 @@
+/*
+ * Chromatic — Design Tokens
+ * Museum aesthetic: spare, typographic, dark canvas with light chrome.
+ */
+
+:root {
+  /* ── Canvas background ──────────────────────────────────────────── */
+  --canvas-bg: #0b0a09;         /* very dark warm near-black           */
+
+  /* ── Surface (overlays, panels) ────────────────────────────────── */
+  --surface:       rgba(14, 13, 12, 0.88);
+  --surface-light: rgba(255, 255, 255, 0.04);
+  --border:        rgba(255, 255, 255, 0.10);
+  --border-bright: rgba(255, 255, 255, 0.22);
+
+  /* ── Typography ─────────────────────────────────────────────────── */
+  --text:     #ede9e3;           /* warm off-white                      */
+  --text-dim: rgba(237, 233, 227, 0.50);
+  --text-faint: rgba(237, 233, 227, 0.28);
+
+  /* Typefaces */
+  --font-serif: 'Georgia', 'Times New Roman', serif;
+  --font-sans:  system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Scale (modular, 1.25 ratio) */
+  --size-2xs: 0.625rem;   /* 10px */
+  --size-xs:  0.75rem;    /* 12px */
+  --size-sm:  0.875rem;   /* 14px */
+  --size-base: 1rem;      /* 16px */
+  --size-lg:  1.125rem;   /* 18px */
+  --size-xl:  1.5rem;     /* 24px */
+  --size-2xl: 2rem;       /* 32px */
+
+  --tracking-wide:  0.05em;
+  --tracking-wider: 0.10em;
+
+  /* ── Spacing (4px base) ─────────────────────────────────────────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  /* ── Motion ─────────────────────────────────────────────────────── */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 280ms;
+  --duration-slow: 500ms;
+}
